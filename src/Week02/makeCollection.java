@@ -24,10 +24,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class SimpleIR {
-
-	public static void main(String[] args) throws ParserConfigurationException, FileNotFoundException, TransformerException{
-		File dir = new File("C:/Users/kapsu/Documents/대학 관련 자료/강의관련자료/2학년 1학기/오픈소스SW입문/강의자료/2주차 실습 html/2주차 실습 html");
+public class makeCollection {
+	
+	public static void makeCol(String path) throws ParserConfigurationException, FileNotFoundException, TransformerException{
+		File dir = new File(path);
 		File[] files = dir.listFiles();
 		
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -43,7 +43,7 @@ public class SimpleIR {
 		{
 			if(files[i].getName().contains(".html"))
 			{
-				Scanner scan = new Scanner(new FileReader("C:/Users/kapsu/Documents/대학 관련 자료/강의관련자료/2학년 1학기/오픈소스SW입문/강의자료/2주차 실습 html/2주차 실습 html/" + files[i].getName()));
+				Scanner scan = new Scanner(new FileReader(path + files[i].getName()));
 				BufferedReader br = null;
 				
 				String title = "", body = "", str_id = Integer.toString(id++);
@@ -87,7 +87,7 @@ public class SimpleIR {
 		tf.setOutputProperty(OutputKeys.INDENT, "yes");
 		
 		DOMSource source = new DOMSource(docFile);
-		StreamResult result = new StreamResult(new FileOutputStream(new File("C:/Users/kapsu/Documents/대학 관련 자료/강의관련자료/2학년 1학기/오픈소스SW입문/과제/SimpleIR/book.xml")));
+		StreamResult result = new StreamResult(new FileOutputStream(new File(path + "collection.xml")));
 		
 		tf.transform(source, result);
 	}
