@@ -7,13 +7,18 @@ import javax.xml.transform.TransformerException;
 
 public class kuir {
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws FileNotFoundException, ParserConfigurationException, TransformerException {
+
 		if(args[1].equals("-c"))
 		{
 			makeCollection mc = new makeCollection();
 			try {
-				mc.makeCol(args[2]);
+				String path = "";
+				for(int i = 2; i < args.length; i++)
+				{
+					path += args[i] + " ";
+				}
+				mc.makeCol(path);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
@@ -25,7 +30,12 @@ public class kuir {
 		else if(args[1].equals("-k"))
 		{
 			makeKeyword mk = new makeKeyword();
-			mk.test("꼬꼬마형태소분석기를테스트하고있어요.테스트결과를볼게요.");
+			String path = "";
+			for(int i = 2; i < args.length; i++)
+			{
+				path += args[i] + " ";
+			}
+			mk.test(path);
 		}
 
 	}

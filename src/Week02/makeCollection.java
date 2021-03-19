@@ -75,7 +75,7 @@ public class makeCollection {
 				title_tag.appendChild(docFile.createTextNode(title));
 				doc_tag.appendChild(title_tag);
 				
-				Element body_tag = docFile.createElement("Body");
+				Element body_tag = docFile.createElement("body");
 				body_tag.appendChild(docFile.createTextNode(body));
 				doc_tag.appendChild(body_tag);
 			}
