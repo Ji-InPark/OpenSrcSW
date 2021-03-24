@@ -9,12 +9,12 @@ public class kuir {
 
 	public static void main(String[] args) throws FileNotFoundException, ParserConfigurationException, TransformerException {
 
-		if(args[1].equals("-c"))
+		if(args[0].equals("-c"))
 		{
 			makeCollection mc = new makeCollection();
 			try {
 				String path = "";
-				for(int i = 2; i < args.length; i++)
+				for(int i = 1; i < args.length; i++)
 				{
 					path += args[i] + " ";
 				}
@@ -27,11 +27,11 @@ public class kuir {
 				e.printStackTrace();
 			}
 		}
-		else if(args[1].equals("-k"))
+		else if(args[0].equals("-k"))
 		{
 			makeKeyword mk = new makeKeyword();
 			String path = "";
-			for(int i = 2; i < args.length; i++)
+			for(int i = 1; i < args.length; i++)
 			{
 				path += args[i] + " ";
 			}

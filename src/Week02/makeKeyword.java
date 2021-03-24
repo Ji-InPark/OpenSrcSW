@@ -41,7 +41,6 @@ public class makeKeyword {
 			String title = "", body_temp = "", body = "", str_id = Integer.toString(id++);
 			while(!str.contains("</doc>")) 
 			{
-				System.out.println(str);
 				if(str != null)
 				{							
 					if(str.contains("<title>"))
@@ -84,8 +83,6 @@ public class makeKeyword {
 			
 			str = scan.nextLine();
 		}
-		
-		System.out.println("out of while");
 		
 		TransformerFactory tff = TransformerFactory.newInstance();
 		Transformer tf = tff.newTransformer();
