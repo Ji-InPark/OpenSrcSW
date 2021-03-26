@@ -1,13 +1,14 @@
 package Week02;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 public class kuir {
 
-	public static void main(String[] args) throws FileNotFoundException, ParserConfigurationException, TransformerException {
+	public static void main(String[] args) throws ParserConfigurationException, TransformerException, IOException {
 
 		if(args[0].equals("-c"))
 		{
@@ -36,6 +37,16 @@ public class kuir {
 				path += args[i] + " ";
 			}
 			mk.test(path);
+		}
+		else if(args[0].equals("-i"))
+		{
+			indexer idx = new indexer();
+			String path = "";
+			for(int i = 1; i < args.length; i++)
+			{
+				path += args[i] + " ";
+			}
+			idx.makePost(path);
 		}
 
 	}
