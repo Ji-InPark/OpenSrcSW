@@ -8,7 +8,7 @@ import javax.xml.transform.TransformerException;
 
 public class kuir {
 
-	public static void main(String[] args) throws ParserConfigurationException, TransformerException, IOException {
+	public static void main(String[] args) throws ParserConfigurationException, TransformerException, IOException, ClassNotFoundException {
 
 		if(args[0].equals("-c"))
 		{
@@ -47,6 +47,27 @@ public class kuir {
 				path += args[i] + " ";
 			}
 			idx.makePost(path);
+		}
+		else if(args[0].equals("-s"))
+		{
+			String path = "";
+			int i = 1;
+			while(!args[i].contains("-"))
+			{
+				path += args[i++] + " ";
+			}
+			
+			String query = "";
+			for(int j = i + 1; j < args.length; j++)
+			{
+				query += args[j] + " ";
+			}
+			
+			System.out.println(path);
+			System.out.println(query);
+			
+			searcher sc = new searcher();
+			sc.search(path, query);
 		}
 
 	}
