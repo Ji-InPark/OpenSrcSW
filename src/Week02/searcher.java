@@ -26,7 +26,7 @@ import org.w3c.dom.Element;
 
 public class searcher {
 	
-	public static void CalcSim(String path, String query) throws IOException, ClassNotFoundException
+	public static void InnerProduct(String path, String query) throws IOException, ClassNotFoundException
 	{
 		FileInputStream fs = new FileInputStream(path);
 		ObjectInputStream ois = new ObjectInputStream(fs);
