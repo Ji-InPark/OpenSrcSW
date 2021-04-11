@@ -20,7 +20,8 @@ import org.snu.ids.kkma.index.KeywordList;
 
 public class searcher {
 	
-	public static void CalcSim_2(String path, String query) throws IOException, ClassNotFoundException
+
+	public static void CalcSim(String path, String query) throws IOException, ClassNotFoundException
 	{
 		FileInputStream fs = new FileInputStream(path);
 		ObjectInputStream ois = new ObjectInputStream(fs);
@@ -85,9 +86,90 @@ public class searcher {
 		for(int i = 0; i < k1.size(); i++)
 		{
 			right_root[i] = Math.sqrt(right_root[i]);
-			root_result[i] = id_result[i] / (left_root * right_root[i]);
+			if(left_root * right_root[i] == 0.0)
+			{
+				root_result[i] = 0.0;
+			}
+			else
+			{
+				root_result[i] = id_result[i] / (left_root * right_root[i]);				
+			}
+			/*
+			System.out.println("id_result[" + i + "]: " + id_result[i]);
+			System.out.println("left_root: " + left_root);
+			System.out.println("right_root[" + i + "]: " + right_root[i]);
+			System.out.println("root_result[" + i + "]: " + root_result[i]);
+			System.out.println("=================================");
+			*/
 		}
 		
+		for(int i = 0; i < 3; i++)
+		{
+			int max_index = 0;
+			for(int j = 0; j < root_result.length; j++)
+			{
+				if(root_result[j] > root_result[max_index])
+				{
+					max_index = j;
+				}
+			}
+			
+			System.out.printf("문서 title: %s - 문서의 유사도: %.2f\n", title_list.get(max_index), root_result[max_index]);
+			root_result[max_index] = -1;
+		}
+	}
+
+	public static void InnerProduct(String path, String query) throws IOException, ClassNotFoundException
+
+	{
+		FileInputStream fs = new FileInputStream(path);
+		ObjectInputStream ois = new ObjectInputStream(fs);
+		
+		Object obj = ois.readObject();
+		ois.close();
+		
+		Scanner scan = new Scanner(new FileReader(path.replace("index.post", "collection.xml")));
+		String str = "";
+		ArrayList<String> title_list = new ArrayList<String>();
+		while(scan.hasNext() && !str.contains("</docs>"))
+		{
+			String title = "";
+			while(!str.contains("</doc>")) 
+			{
+				if(str != null)
+				{							
+					if(str.contains("<title>"))
+					{
+						str = str.replace("<title>", "");
+						str = str.replace("</title>", "");
+						title = str.trim();
+						
+						title_list.add(title);
+					}
+				}
+				str = scan.nextLine();
+			}
+			str = scan.nextLine();
+		}
+		
+		double[] id_result = new double[title_list.size()];
+		Arrays.fill(id_result, 0.0);
+
+		HashMap<String, ArrayList <Double>> map = (HashMap<String, ArrayList <Double>>)obj;
+		
+		KeywordExtractor ke = new KeywordExtractor();
+		KeywordList k1 = ke.extractKeyword(query, true);
+		
+		for(int i = 0; i < k1.size(); i++)
+		{
+			Keyword kwrd = k1.get(i);
+			ArrayList <Double> temp_array = (ArrayList <Double>) map.get(kwrd.getString());
+			for(int j = 0; j < temp_array.size(); j += 2)
+			{
+				id_result[Integer.parseInt(String.valueOf(Math.round(temp_array.get(j))))] += (double)kwrd.getCnt() * temp_array.get(j + 1);
+			}
+		}
+
 		for(int i = 0; i < 3; i++)
 		{
 			int max_index = 0;
@@ -100,7 +182,6 @@ public class searcher {
 			}
 			
 			System.out.printf("문서 title: %s - 문서의 유사도: %.2f\n", title_list.get(max_index), id_result[max_index]);
-			root_result[max_index] = -1;
 			id_result[max_index] = -1;
 		}
 	}
