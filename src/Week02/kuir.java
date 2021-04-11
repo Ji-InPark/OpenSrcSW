@@ -67,7 +67,7 @@ public class kuir {
 			System.out.println(query);
 			
 			searcher sc = new searcher();
-			sc.search(path, query);
+			sc.CalcSim(path, query);
 		}
 
 	}
